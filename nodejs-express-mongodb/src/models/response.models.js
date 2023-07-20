@@ -9,7 +9,7 @@ response.success = (res, data, message, status)=>{
 }
 
 response.error = (res, error, message, status) =>{
-    res.status(status || 500).json({
+    res.status(status || 404).json({
         status: status,
         error: error,
         message: message

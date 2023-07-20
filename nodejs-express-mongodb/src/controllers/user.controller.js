@@ -14,12 +14,12 @@ userController.index = async (req, res) => {
 
 userController.store = async (req, res) => {
     const user = new userSchema(req.body);
-    const { error, value} = await user.validateInput(req.body);
+    const { error, value } = await user.validateInput(req.body);
     if (error) {
         const errorMessage = error.details.map((detail) => detail.message).join(', ');
         return response.error(res, errorMessage, 'validation error', 400);
     }
-    try{
+    try {
         var result = await user.save();
         return response.success(res, result, 'Success', 200);
     } catch (err) {
@@ -28,24 +28,36 @@ userController.store = async (req, res) => {
 }
 
 userController.show = async (req, res) => {
+
+    const exit = await getUserById(req.params.id);
+    if (!exit) {
+        return response.error(res, 'User not found', 'Failed', 404);
+    }
+
     try {
         var result = await userSchema.findById(req.params.id);
-        if(result) {
+        if (result) {
             return response.success(res, result, 'Success', 200);
-        }else{
+        } else {
             return response.error(res, result, 'User not found', 'Failed', 500);
         }
-    }catch (err) {
+    } catch (err) {
         return response.error(res, err, 'Failed', 500);
     }
 }
 
 userController.update = async (req, res) => {
-    try{
+
+    const exit = await getUserById(req.params.id);
+    if (!exit) {
+        return response.error(res, 'User not found', 'Failed', 404);
+    }
+
+    try {
         var user = await userSchema.findById(req.params.id);
         var body = req.body;
 
-        if (req.params.id !== user.id){
+        if (req.params.id !== user.id) {
             return response.error(res, user, 'User not found', 'Failed', 500);
         }
         var data = {
@@ -61,7 +73,7 @@ userController.update = async (req, res) => {
         }
 
         const updateSchema = new userSchema(req.body);
-        const { error, value} = await updateSchema.validateInput(req.body);
+        const { error, value } = await updateSchema.validateInput(req.body);
 
         if (error) {
             const errorMessage = error.details.map((detail) => detail.message).join(', ');
@@ -71,25 +83,45 @@ userController.update = async (req, res) => {
         var update = await userSchema.findByIdAndUpdate(req.params.id, data, { new: true });
         if (update) {
             return response.success(res, update, 'Success', 200);
-        }else{
-            return response.error(res, 'Userr not found', 'Failed', 404);
+        } else {
+            return response.error(res, 'User not found', 'Failed', 404);
         }
-    }catch(err) {
+    } catch (err) {
         return response.error(res, err, 'Failed', 500);
     }
 }
 
 userController.destroy = async (req, res) => {
+
+    const exit = await getUserById(req.params.id);
+    if (!exit) {
+        return response.error(res, 'User not found', 'Failed', 404);
+    }
+
     try {
         var result = await userSchema.findByIdAndDelete(req.params.id);
+
         if (result) {
-            return response.success(res, result, 'Success', 200);
-        }else {
-            return response.error(res, result, 'User not found', 'Failed', 500);
+            return response.success(res, null, 'Success', 200);
+        } else {
+            return response.error(res, null, 'User not found', 'Failed', 500);
         }
-    }catch (err){
+    } catch (err) {
+
         return response.error(res, err, 'Failed', 500);
     }
 }
+
+const getUserByEmail = (email) => {
+    return userSchema.findOne({
+        email: email,
+    });
+}
+
+const getUserById = (id) => {
+    return userSchema.findById(id);
+}
+
+
 
 module.exports = userController;

@@ -64,6 +64,7 @@ userController.update = async (req, res) => {
             firstname: body.firstname || user.firstname,
             lastname: body.lastname || user.lastname,
             idcardnumber: body.idcardnumber || user.idcardnumber,
+            gender: body.gender || user.gender,
             birthdate: body.birthdate || user.birthdate,
             email: body.email || user.email,
             phone: body.phone || user.phone,

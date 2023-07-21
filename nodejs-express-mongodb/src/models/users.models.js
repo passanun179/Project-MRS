@@ -37,6 +37,12 @@ const userSchema = new Schema({
         maxlength: [30, 'email cannot be longer than 30 characters'],
         unique: true
     },
+    phone:{
+        type: String,
+        require: [true, 'phone is required'],
+        minlength: [0],
+        maxlength: [10, 'phone cannot be longer than 10 characters']
+    },
     address: {
         type: String,
         require: [true, 'address is required'],
@@ -60,6 +66,7 @@ const userValidSchema = Joi.object({
     gender: Joi.string().min(3).max(30).required(),
     birthdate: Joi.date().required(),
     email: Joi.string().min(3).max(30).required(),
+    phone: Joi.string().min(0).max(10).required(),
     address: Joi.string().min(3).max(30).required()
 });
 

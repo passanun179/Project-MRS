@@ -71,12 +71,12 @@ authenticationController.signin = async (req, res) => {
     }
 
     const accessToken = jwt.sign({ id: empExit.id }, config.secret, {
-        expiresIn: '15m',
+        expiresIn: '15d',
         issuer: config.issuer,
     });
 
     const refreshToken = jwt.sign({ id: empExit.id }, config.secret, {
-        expiresIn: '1d',
+        expiresIn: '15d',
         issuer: config.issuer,
     });
 
@@ -107,12 +107,12 @@ authenticationController.refreshToken = async (req, res) => {
             return response.error(res, 'Error id not found', 'Failed', 500);
         }
         const accessToken = jwt.sign({ id: decoded.id }, config.secret, {
-            expiresIn: '15m',
+            expiresIn: '14d',
             issuer: config.issuer,
         });
 
         const refreshToken = jwt.sign({ id: decoded.id }, config.secret, {
-            expiresIn: '1d',
+            expiresIn: '14d',
             issuer: config.issuer,
         });
 

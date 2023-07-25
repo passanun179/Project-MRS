@@ -35,7 +35,8 @@ const corsOptions = {
 
 app.use('/api', cors(corsOptions), authRouter); // public
 
-app.use('/api', cors(corsOptions), auth, userRouter); // private
+//app.use('/api', cors(corsOptions), auth, userRouter); // private
+app.use('/api', cors(corsOptions) , userRouter); // public for testing purposes
 
 const onStart = () => {
     console.log(`Server started on port ${PORT}`);

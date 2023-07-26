@@ -1,4 +1,5 @@
 <template>
+    <HelloWorld/>
     <div class="container mt-5">
         <div class="card">
             <div class="card-header">
@@ -7,34 +8,34 @@
             <div class="card-body">
                 <div class="mb-3">
                     <label for="">Name</label>
-                    <input type="text" v-model="model.patient.name" class="form-control"/>
+                    <input type="text" v-model="model.patient.name" class="form-control" placeholder="Enter patient name"/>
                 </div>
                 <div class="mb-3">
                     <label for="email">Email</label>
-                    <input type="text" id="email" v-model="model.patient.email" class="form-control"/>
+                    <input type="text" id="email" v-model="model.patient.email" class="form-control" placeholder="Enter patient Email"/>
                 </div>
                 <div class="mb-3">
                     <label for="id_card">ID Card Number</label>
-                    <input type="text" id="id_card" maxlength="13" v-model="model.patient.idcardnumber" class="form-control"/>
+                    <input type="text" id="id_card" maxlength="13" v-model="model.patient.idcardnumber" class="form-control" placeholder="Enter patient ID Card Number"/>
                 </div>
                 <div class="mb-3">
                     <label for="gender">Gender</label>
-                    <input type="text" id="gender" v-model="model.patient.gender" class="form-control"/>
+                    <input type="text" id="gender" v-model="model.patient.gender" class="form-control" placeholder="Enter patient Gender : male or female"/>
                 </div>
                 <div class="mb-3">
                     <label for="address">Address</label>
-                    <input type="text" id="address" v-model="model.patient.address" class="form-control"/>
+                    <input type="text" id="address" v-model="model.patient.address" class="form-control" placeholder="Enter patient Address"/>
                 </div>
                 <div class="mb-3">
                     <label for="phone">Phone</label>
-                    <input type="text" id="phone" v-model="model.patient.phone" class="form-control"/>
+                    <input type="text" id="phone" v-model="model.patient.phone" class="form-control" placeholder="Enter patient Phone"/>
                 </div>
                 <div>
                     <label for="birthdate">Birthdate:</label>
                     <VueDatePicker id="birthdate" v-model="model.patient.birthdate"></VueDatePicker>
                 </div>
                 <div class="mb-3">
-                    <button to="/patient" type="button" @click="savePatient" class="btn btn-primary">Save</button>
+                    <button type="button" @click="savePatient" class="btn btn-primary">Save</button>
                 </div>
             </div>
         </div>
@@ -43,11 +44,13 @@
 <script>
 import axios from 'axios'
 import VueDatePicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css'
+import '@vuepic/vue-datepicker/dist/main.css';
+import HelloWorld from '@/components/HelloWorld.vue';
 export default {
     name: 'patientCreate',
     components:{
-        VueDatePicker
+        VueDatePicker,
+        HelloWorld
     },
     data () {
         return { 
@@ -83,6 +86,7 @@ export default {
                     phone: this.patient.phone,
                     birthdate: this.patient.birthdate
                 }
+                this.$router.push('/patients');
             }
             catch (error) {
                 console.log(error)

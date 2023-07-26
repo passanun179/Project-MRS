@@ -51,7 +51,7 @@ authenticationController.signup = async (req, res) => {
 authenticationController.signin = async (req, res) => {
 
     const body = req.body;
-
+console.log(body);
     if (body.email == null || body.password == null || body.email == '' || body.password == '' || body.email == undefined || body.password == undefined) {
         return response.error(res, 'Error missing email or password is invalid !', 'Failed', 500);
     }

@@ -6,12 +6,12 @@
     </div>
     <div class="form-group">
         <div class="mb-3">
-            <label for="email">name</label>
-            <input type="text" id="name" v-model="model.name" class="form-control"/>
+            <label for="email">email</label>
+            <input type="text" id="email" v-model="model.email" class="form-control"/>
         </div>
         <div class="mb-3">
-            <label for="email">Password</label>
-            <input type="text" id="password" v-model="model.password" class="form-control"/>
+            <label for="password">Password</label>
+            <input :type="passwordInputType" id="password" v-model="model.password" class="form-control"/>
         </div>
         <router-link to="/signup">Sign Up</router-link>
         <button v-on:click="loginUser" >Sign In</button>
@@ -27,25 +27,34 @@ export default {
   data() {
     return {
       model:{
-        name: '',
+          email: '',
         password: '',
-      }
-    };
+        },
+        showPassword: false,
+    }
+  },
+  computed: {
+    passwordInputType() {
+      return this.showPassword ? 'text' : 'password';
+    },
   },
   methods: {
     async loginUser() {
-      const User = new FormData();
-      User.append("username", this.model.name);
-      User.append("password", this.model.password);
+      const User = {
+        email: this.model.email ,
+        password: this.model.password
+      }
       try{
-      const response = await axios.post('http://localhost:8080/api/auth/signin', FormData);
+      const response = await axios.post('http://localhost:8080/api/auth/signin', User);
       console.log(response);
-      this.model.name = response.data.name;
-      this.model.password = response.data.password;
+        this.model.email =response.data.email,
+        this.model.password= response.data.password  
+        this.$router.push('/patients');
       } catch (error) {
       // Handle login errors here, show an error message, etc.
       console.error('Login failed:', error.message);
-      }
+      window.alert('Login failed. Please check your email and password and try again.');
+    }
     },
   }
 };

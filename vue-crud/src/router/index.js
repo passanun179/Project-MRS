@@ -30,12 +30,13 @@ const router = createRouter({
       component: PatientCreate
     },
     {
-      path: '/patients/:id/edit',
+      path: '/patients/:id',
       name: 'patientEdit',
       component: PatientEdit
     }
     
   ]
-})
+});
+
 
 export default router

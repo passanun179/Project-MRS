@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container mt-5">
         <div class="card">
         <div class="card-header">
             <h4>
@@ -21,7 +21,6 @@
                         <th>EMAIL</th>
                         <th>PHONE</th>
                         <th>ADDRESS</th>
-                        <th>CREATED AT</th>
                         <th>ACTION</th>
                     </tr>
                 </thead>
@@ -35,10 +34,9 @@
                         <td>{{ patient.email }}</td>                        
                         <td>{{ patient.phone }}</td>
                         <td>{{ patient.address }}</td>
-                        <td>{{ patient.created_at }}</td>
                         <td>
                             <button>
-                                <RouterLink :to="{ path: '/patients/' + patient._id }" type="button" class="btn-success float-end">
+                                <RouterLink :to="{ path: '/patients/' + patient._id }" type="button" class="btn-success float-end edit-button">
                                 Edit
                             </RouterLink>
                             </button>
@@ -59,7 +57,7 @@
     </div>
 </template>  
 <script>
-import axios from 'axios'
+import axios from 'axios';
 export default{
     name: 'patients',
     data() {
@@ -93,3 +91,9 @@ export default{
 
 }
 </script>
+<style>
+.edit-button {
+    color: #fff;
+    border-radius: 1rem;
+}
+</style>

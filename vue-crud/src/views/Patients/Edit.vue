@@ -34,14 +34,14 @@
                     <VueDatePicker id="birthdate" v-model="model.data.birthdate"></VueDatePicker>
                 </div>
                 <div class="mb-3">
-                    <button to="/patients" type="button" @click="updatePatient" class="btn btn-primary">Save</button>
+                    <button type="button" @click="updatePatient" class="btn btn-primary">Save</button>
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script>
-import axios from 'axios'
+import axios from 'axios';
 export default {
     name: 'patientEdit',
     data () {
@@ -82,20 +82,21 @@ export default {
                 this.model.data.birthdate = data.birthdate
             }
             catch (error) {
-                console.log(error.errorMessage)
+                console.log(error.message)
             }
         },
         async updatePatient(){
             try {
                 const res = await axios.put(`http://localhost:8080/api/patient/${this.patientId}`, this.model.data);
                 if(res.status == 200){
-                    this.$router.reload();
+                    // this.$router.reload();
+                this.$router.push('/patients');
+
                 }else{
                     return alert("fail to update patient")
-                }
-            }
+                }            }
             catch (error) {
-                console.log(error.errorMessage)
+                console.log(error.message)
             }
         },
         // resetForm() {
